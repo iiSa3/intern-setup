@@ -1,20 +1,31 @@
 package com.verint;
 
 public class Lift {
+    private int destination;
+    private int currentFloor;
 
+    public Lift(int currentFloor){
+        this.currentFloor = currentFloor;
+    }
     public boolean areDoorsOpen() {
-        return false;
+        return (destination == currentFloor);
     }
 
-    public void setFloorNumber(int floorNumber) {
-        
-    }
 
     public void call(int userFloor) {
+        destination = userFloor;
+        move(destination);
+    }
+
+    private void move(int destination) {
+        currentFloor = destination;
     }
 
     public boolean previousDoorState() {
-
         return false;
+    }
+
+    public int getFloor() {
+        return currentFloor;
     }
 }
