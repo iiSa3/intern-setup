@@ -1,11 +1,16 @@
 package com.verint;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Lift {
     private int destination;
     private int currentFloor;
+    private List<String> history;
 
     public Lift(int currentFloor){
         this.currentFloor = currentFloor;
+        this.history = new ArrayList<>();
     }
     public boolean areDoorsOpen() {
         return (destination == currentFloor);
@@ -23,7 +28,10 @@ public class Lift {
     }
 
     private void move(int destination) {
-        currentFloor = destination;
+        for(;currentFloor<destination;currentFloor++) {
+            history.add("Passing floor " + currentFloor);
+        }
+        history.add("Lift arrived at floor " + currentFloor);
     }
 
     public boolean previousDoorState() {
@@ -33,4 +41,5 @@ public class Lift {
     public int getFloor() {
         return currentFloor;
     }
+
 }
