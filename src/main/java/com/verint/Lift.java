@@ -17,6 +17,11 @@ public class Lift {
         move(destination);
     }
 
+    public void sendTo(int newFloor) {
+        destination = newFloor;
+        move(destination);
+    }
+
     private void move(int destination) {
         currentFloor = destination;
     }

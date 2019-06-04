@@ -19,3 +19,9 @@ Feature: Scenarios to do with being able to call the lift
     Given The lift is at floor 3
     When I call the lift from floor 3
     Then The doors are open
+
+  Scenario: The doors open when reaching the destination
+    Given The lift is at floor 3
+    And I select floor 4
+    When The lift arrives
+    Then The doors are open
