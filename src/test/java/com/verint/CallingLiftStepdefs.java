@@ -52,4 +52,10 @@ public class CallingLiftStepdefs {
     public void theDoorsAreOpen() {
         assertThat(lift.areDoorsOpen(),is(equalTo(true)));
     }
+
+    @Given("I select floor {int}")
+    public void iSelectFloor(int newFloor) {
+        destination = newFloor;
+        lift.sendTo(newFloor);
+    }
 }
