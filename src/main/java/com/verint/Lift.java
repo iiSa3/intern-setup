@@ -71,10 +71,12 @@ public class Lift {
         }
     }
     private void moveUp(int destination){
-        for(;currentFloor<destination;currentFloor++) {
+        for(;currentFloor<=destination;currentFloor++) {
+            System.out.println(currentFloor + "" + destinationQueue[currentFloor - min]);
             if (destinationQueue[currentFloor - min]) {
                 destinationQueue[currentFloor - min] = false;
                 history.add("Lift arrived at floor " + currentFloor);
+                break;
             } else {
                 history.add("Passing floor " + currentFloor);
             }
@@ -85,6 +87,7 @@ public class Lift {
             if (destinationQueue[currentFloor - min]) {
                 destinationQueue[currentFloor - min] = false;
                 history.add("Lift arrived at floor " + currentFloor);
+                break;
             } else {
                 history.add("Passing floor " + currentFloor);
             }
@@ -100,6 +103,8 @@ public class Lift {
         if(currentFloor> destination){
             moveDown(destination);
         }
+
+        System.out.println(Arrays.toString(destinationQueue));
 
         checkInDirection(direction);
 
