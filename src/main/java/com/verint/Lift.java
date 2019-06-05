@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Lift {
+    private static boolean OPEN = true;
+    private static boolean CLOSED = false;
     private int destination;
     private int currentFloor;
+    private boolean doors;
     private List<String> history;
 
     public Lift(int currentFloor){
@@ -13,17 +16,19 @@ public class Lift {
         this.history = new ArrayList<String>();
     }
     public boolean areDoorsOpen() {
-        return (destination == currentFloor);
+        return (doors);
     }
 
 
     public void call(int userFloor) {
         destination = userFloor;
+        doors = CLOSED;
         move(destination);
     }
 
     public void sendTo(int newFloor) {
         destination = newFloor;
+        doors = CLOSED;
         move(destination);
     }
 
@@ -42,9 +47,11 @@ public class Lift {
         }
 
         history.add("Lift arrived at floor " + currentFloor);
+        doors = OPEN;
     }
 
     public boolean previousDoorState() {
+
         return false;
     }
 

@@ -29,7 +29,7 @@ public class CallingLiftStepdefs {
 
     @Then("the doors are closed")
     public void theDoorsAreClosed() {
-        assertThat(lift.areDoorsOpen(), is(equalTo(false)));
+        assertThat(lift.previousDoorState(), is(equalTo(false)));
     }
 
     @Given("The lift is at floor {int}")
