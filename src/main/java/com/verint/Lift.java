@@ -1,12 +1,14 @@
 package com.verint;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Lift {
     private static boolean OPEN = true;
     private static boolean CLOSED = false;
     private int destination;
+    private boolean[] destinationQueue;
     private int currentFloor;
     private int min;
     private int max;
@@ -20,6 +22,7 @@ public class Lift {
         this.history = new ArrayList<String>();
         this.min = 0;
         this.max = 10;
+        destinationQueue = new boolean[max - min+1];
     }
 
     public Lift(int currentFloor, int min, int max) {
@@ -29,26 +32,34 @@ public class Lift {
         this.min = min;
         this.max= max;
         this.action = false;
+        destinationQueue = new boolean[max - min+1];
     }
 
     public boolean areDoorsOpen() {
         return (doors);
     }
 
-
+    private void addDestination(int floor){
+        if(floor >= min && floor <= max) {
+            destinationQueue[floor - min] = true;
+            System.out.println(Arrays.toString(destinationQueue));
+            if (destination == currentFloor) {
+                // this will only be reached if we got to the destination floor
+                destination = floor;
+                doors = CLOSED;
+            }
+            this.action = true;
+        }
+        else{
+            this.action = false;
+        }
+    }
     public void call(int userFloor) {
-        destination = userFloor;
-        doors = CLOSED;
-        //move(destination);
+        addDestination(userFloor);
     }
 
     public void sendTo(int newFloor) {
-        if(destination == currentFloor) {
-            // this will only be reached if we get to the destination floor
-            destination = newFloor;
-            doors = CLOSED;
-            //move(destination);
-        }
+        addDestination(newFloor);
 
     }
     public void printHistory(){
@@ -61,23 +72,26 @@ public class Lift {
 
     private void moveUp(int destination){
         for(;currentFloor<destination;currentFloor++) {
-            history.add("Passing floor " + currentFloor);
+            if (destinationQueue[currentFloor - min]) {
+                destinationQueue[currentFloor - min] = false;
+                history.add("Lift arrived at floor " + currentFloor);
+            } else {
+                history.add("Passing floor " + currentFloor);
+            }
         }
     }
     private void moveDown(int destination){
         for(;currentFloor>destination;currentFloor--) {
-            history.add("Passing floor " + currentFloor);
-        }
+            if (destinationQueue[currentFloor - min]) {
+                destinationQueue[currentFloor - min] = false;
+                history.add("Lift arrived at floor " + currentFloor);
+            } else {
+                history.add("Passing floor " + currentFloor);
+            }        }
     }
 
     public void move(int destination) {
-        if (destination <min || destination>max){
-            this.action = false;
-            return;
-        }
-        this.action = true;
         // lift can move up
-
         if(currentFloor< destination){
             moveUp(destination);
         }
@@ -92,7 +106,6 @@ public class Lift {
     }
 
     public boolean previousDoorState() {
-
         return false;
     }
 
@@ -110,7 +123,6 @@ public class Lift {
     }
 
     public boolean getAction() {
-
         return this.action;
     }
 }

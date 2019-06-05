@@ -98,4 +98,8 @@ public class CallingLiftStepdefs {
     }
 
 
+    @Then("The lift stopped at floor {int}")
+    public void theLiftStoppedAtFloor(int floor) {
+        assertThat(lift.getFloorHistory().contains("Lift arrived at floor " + floor),is(equalTo(true)));
+    }
 }

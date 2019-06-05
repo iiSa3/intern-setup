@@ -69,6 +69,15 @@ Feature: Scenarios to do with being able to call the lift
     And The lift starts to move
     Then The lift arrives
 
+  Scenario: invalid level followed by valid level
+    Given The lift can go between floors 0 and 10
+    When I select floor 11
+    And The lift starts to move
+    Then The lift should "not move"
+    When I select floor 4
+    And The lift starts to move
+    Then The lift arrives
+
   Scenario Outline: when a floor is selectable that floor must be reachable
     Given The lift can go between floors <min> and <max>
     When I select floor <floor>
@@ -83,3 +92,13 @@ Feature: Scenarios to do with being able to call the lift
       | 0   | 10  | 0     | move     |
       | 0   | 10  | 10    | move     |
       | -2  | 10  | -2    | move     |
+
+  Scenario: The lift can pickup passengers on the way
+    Given The lift is at floor 0
+    And I select floor 3
+    When I call the lift from floor 2
+    And The lift starts to move
+    Then The lift stopped at floor 2
+    And The lift starts to move
+    And The lift stopped at floor 3
+
