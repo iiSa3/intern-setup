@@ -32,18 +32,25 @@ public class Lift {
         move(destination);
     }
 
+    private void moveUp(int destination){
+        for(;currentFloor<destination;currentFloor++) {
+            history.add("Passing floor " + currentFloor);
+        }
+    }
+    private void moveDown(int destination){
+        for(;currentFloor>destination;currentFloor--) {
+            history.add("Passing floor " + currentFloor);
+        }
+    }
+
     private void move(int destination) {
         // lift can move up
         if(currentFloor< destination){
-            for(;currentFloor<destination;currentFloor++) {
-                history.add("Passing floor " + currentFloor);
-            }
+            moveUp(destination);
         }
         // lift can move down
         if(currentFloor> destination){
-            for(;currentFloor>destination;currentFloor--) {
-                history.add("Passing floor " + currentFloor);
-            }
+            moveDown(destination);
         }
 
         history.add("Lift arrived at floor " + currentFloor);
