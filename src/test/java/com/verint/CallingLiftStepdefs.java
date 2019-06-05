@@ -60,7 +60,7 @@ public class CallingLiftStepdefs {
         assertThat(lift.areDoorsOpen(),is(equalTo(true)));
     }
 
-    @Given("I select floor {int}")
+    @Given("I select floor (-?\\d+)$")
     public void iSelectFloor(int newFloor) {
         lift.sendTo(newFloor);
         destination = lift.getDestination();
@@ -68,7 +68,7 @@ public class CallingLiftStepdefs {
 
     @When("the lift passes floor {int}")
     public void theLiftPassesFloor(int passesFloor) {
-        lift.printHistory();
+
         assertThat(lift.getFloorHistory().contains("Passing floor " + passesFloor), is(equalTo(true)));
     }
 
@@ -81,4 +81,21 @@ public class CallingLiftStepdefs {
     public void theLiftStartsToMove() {
         lift.move(lift.getDestination());
     }
+
+
+
+    @Then("The lift should {string}")
+    public void theLiftShould(String action) {
+
+        assertThat(action.equals("move"), is(equalTo(lift.getAction())));
+    }
+
+
+    @Given("The lift can go between floors (-?\\d+) and (-?\\d+)")
+    public void theLiftCanGoBetweenFloorsMinAndMax(int min, int max) {
+        lift = new Lift(0, min, max);
+
+    }
+
+
 }

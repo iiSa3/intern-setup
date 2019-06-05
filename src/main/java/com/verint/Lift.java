@@ -8,6 +8,9 @@ public class Lift {
     private static boolean CLOSED = false;
     private int destination;
     private int currentFloor;
+    private int min;
+    private int max;
+    private boolean action;
     private boolean doors;
     private List<String> history;
 
@@ -15,7 +18,19 @@ public class Lift {
         this.currentFloor = currentFloor;
         this.destination = currentFloor;
         this.history = new ArrayList<String>();
+        this.min = 0;
+        this.max = 10;
     }
+
+    public Lift(int currentFloor, int min, int max) {
+        this.currentFloor = currentFloor;
+        this.destination = currentFloor;
+        this.history = new ArrayList<String>();
+        this.min = min;
+        this.max= max;
+        this.action = false;
+    }
+
     public boolean areDoorsOpen() {
         return (doors);
     }
@@ -56,7 +71,13 @@ public class Lift {
     }
 
     public void move(int destination) {
+        if (destination <min || destination>max){
+            this.action = false;
+            return;
+        }
+        this.action = true;
         // lift can move up
+
         if(currentFloor< destination){
             moveUp(destination);
         }
@@ -66,6 +87,7 @@ public class Lift {
         }
 
         history.add("Lift arrived at floor " + currentFloor);
+
         doors = OPEN;
     }
 
@@ -85,5 +107,10 @@ public class Lift {
 
     public int getDestination() {
         return this.destination;
+    }
+
+    public boolean getAction() {
+
+        return this.action;
     }
 }
