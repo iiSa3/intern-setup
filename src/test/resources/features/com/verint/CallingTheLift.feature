@@ -60,3 +60,11 @@ Feature: Scenarios to do with being able to call the lift
        And The lift starts to move
        Then The lift arrives
 
+Scenario: i can go on multiple trips in the lift
+  Given The lift is at floor 5
+  And I select floor 3
+  And The lift starts to move
+  And  The lift arrives
+  When I select floor 5
+  And The lift starts to move
+  Then The lift arrives
