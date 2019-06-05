@@ -47,13 +47,6 @@ Feature: Scenarios to do with being able to call the lift
     And The lift starts to move
     Then the lift passes floor 2
 
-  Scenario: Lift can only have one destination
-    Given The lift is at floor 0
-    And I select floor 3
-    When I select floor 5
-    And The lift starts to move
-    Then The destination is floor 3
-
   Scenario:  Given i select a floor then i should reach that floor
     Given The lift is at floor 6
     When I select floor 3
@@ -102,3 +95,48 @@ Feature: Scenarios to do with being able to call the lift
     And The lift starts to move
     And The lift stopped at floor 3
 
+  Scenario: The lift can pickup passengers on the way down
+    Given The lift is at floor 10
+    And I select floor 3
+    When I call the lift from floor 7
+    And The lift starts to move
+    Then The lift stopped at floor 7
+    And The lift starts to move
+    And The lift stopped at floor 3
+
+
+  Scenario: The lift goes to all destinations
+    Given The lift is at floor 3
+    And I select floor 5
+    And I select floor 1
+    When The lift starts to move
+    Then The lift stopped at floor 5
+    And The lift starts to move
+    And The lift stopped at floor 1
+
+  Scenario: The lift goes to all destinations
+    Given The lift is at floor 2
+    And I select floor 5
+    And I select floor 1
+    And I select floor 3
+    And I select floor 2
+    When The lift starts to move
+    Then The lift stopped at floor 3
+    And The lift starts to move
+    And The lift stopped at floor 5
+    And The lift starts to move
+    And The lift stopped at floor 2
+    And The lift starts to move
+    And The lift stopped at floor 1
+
+#  Scenario: The lift goes only in one direction
+#    Given The lift is at floor 3
+#    And The lift is going up
+#    And I select floor 1
+#    And I select floor 4
+#    And I select floor 9
+#    When The lift starts to move
+#    Then The lift stopped at floor 4
+#    And The lift starts to move
+#    And The lift starts to move
+#    Then The lift

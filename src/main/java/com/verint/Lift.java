@@ -15,6 +15,9 @@ public class Lift {
     private boolean action;
     private boolean doors;
     private List<String> history;
+    private int direction = 1;
+    private static final int UP = 1;
+    private static final int DOWN = -1;
 
     public Lift(int currentFloor){
         this.currentFloor = currentFloor;
@@ -42,7 +45,6 @@ public class Lift {
     private void addDestination(int floor){
         if(floor >= min && floor <= max) {
             destinationQueue[floor - min] = true;
-            System.out.println(Arrays.toString(destinationQueue));
             if (destination == currentFloor) {
                 // this will only be reached if we got to the destination floor
                 destination = floor;
@@ -68,8 +70,6 @@ public class Lift {
 
         }
     }
-
-
     private void moveUp(int destination){
         for(;currentFloor<destination;currentFloor++) {
             if (destinationQueue[currentFloor - min]) {
@@ -81,16 +81,17 @@ public class Lift {
         }
     }
     private void moveDown(int destination){
-        for(;currentFloor>destination;currentFloor--) {
+        for(;currentFloor>=destination;currentFloor--) {
             if (destinationQueue[currentFloor - min]) {
                 destinationQueue[currentFloor - min] = false;
                 history.add("Lift arrived at floor " + currentFloor);
             } else {
                 history.add("Passing floor " + currentFloor);
-            }        }
+            }
+        }
     }
 
-    public void move(int destination) {
+    public void move() {
         // lift can move up
         if(currentFloor< destination){
             moveUp(destination);
@@ -100,9 +101,24 @@ public class Lift {
             moveDown(destination);
         }
 
-        history.add("Lift arrived at floor " + currentFloor);
+        checkInDirection(direction);
+
+        if(destination == currentFloor)
+            checkInDirection(direction *-1);
+
+        if(destination != currentFloor)
+            move();
 
         doors = OPEN;
+    }
+
+    private void checkInDirection(int direction) {
+        for(int i = currentFloor - min + direction; i >= 0 && i <= max-min; i+=direction) {
+            if (destinationQueue[i]) { // If this floor is to be visited
+                destination = i + min;
+                break;
+            }
+        }
     }
 
     public boolean previousDoorState() {

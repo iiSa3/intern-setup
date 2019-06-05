@@ -79,14 +79,13 @@ public class CallingLiftStepdefs {
 
     @And("The lift starts to move")
     public void theLiftStartsToMove() {
-        lift.move(lift.getDestination());
+        lift.move();
     }
 
 
 
     @Then("The lift should {string}")
     public void theLiftShould(String action) {
-
         assertThat(action.equals("move"), is(equalTo(lift.getAction())));
     }
 
@@ -100,6 +99,7 @@ public class CallingLiftStepdefs {
 
     @Then("The lift stopped at floor {int}")
     public void theLiftStoppedAtFloor(int floor) {
+        //lift.printHistory();
         assertThat(lift.getFloorHistory().contains("Lift arrived at floor " + floor),is(equalTo(true)));
     }
 }
