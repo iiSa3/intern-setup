@@ -31,7 +31,7 @@ Feature: Scenarios to do with being able to call the lift
      When I select floor 3
      Then the doors are closed
 
-#  Scenario: The lift passes floors to reach its destination
-#    Given The lift is at floor 1
-#    When I select floor 3
-#    Then the lift passes floor 2
+  Scenario: The lift passes floors to reach its destination
+    Given The lift is at floor 1
+    When I select floor 3
+    Then the lift passes floor 2

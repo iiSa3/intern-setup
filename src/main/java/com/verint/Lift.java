@@ -59,4 +59,8 @@ public class Lift {
         return currentFloor;
     }
 
+    public List<String> getFloorHistory() {
+
+        return history;
+    }
 }

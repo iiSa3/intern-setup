@@ -69,6 +69,6 @@ public class CallingLiftStepdefs {
     @When("the lift passes floor {int}")
     public void theLiftPassesFloor(int passesFloor) {
 
-        //assertThat(lift.getFloorHistory(), contains());
+        assertThat(lift.getFloorHistory().contains("Passing floor " + passesFloor), is(equalTo(true)));
     }
 }
