@@ -104,8 +104,6 @@ public class Lift {
             moveDown(destination);
         }
 
-        System.out.println(Arrays.toString(destinationQueue));
-
         checkInDirection(direction);
 
         if(destination == currentFloor)
