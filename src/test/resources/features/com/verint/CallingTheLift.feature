@@ -54,3 +54,9 @@ Feature: Scenarios to do with being able to call the lift
      And The lift starts to move
      Then The destination is floor 3
 
+     Scenario:  Given i select a floor then i should reach that floor
+       Given The lift is at floor 6
+       When I select floor 3
+       And The lift starts to move
+       Then The lift arrives
+
