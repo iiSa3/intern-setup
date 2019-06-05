@@ -10,7 +10,7 @@ public class Lift {
 
     public Lift(int currentFloor){
         this.currentFloor = currentFloor;
-        this.history = new ArrayList<>();
+        this.history = new ArrayList<String>();
     }
     public boolean areDoorsOpen() {
         return (destination == currentFloor);
@@ -28,9 +28,19 @@ public class Lift {
     }
 
     private void move(int destination) {
-        for(;currentFloor<destination;currentFloor++) {
-            history.add("Passing floor " + currentFloor);
+        // lift can move up
+        if(currentFloor< destination){
+            for(;currentFloor<destination;currentFloor++) {
+                history.add("Passing floor " + currentFloor);
+            }
         }
+        // lift can move down
+        if(currentFloor> destination){
+            for(;currentFloor>destination;currentFloor--) {
+                history.add("Passing floor " + currentFloor);
+            }
+        }
+
         history.add("Lift arrived at floor " + currentFloor);
     }
 
