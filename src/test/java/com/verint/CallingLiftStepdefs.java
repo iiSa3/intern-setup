@@ -62,13 +62,23 @@ public class CallingLiftStepdefs {
 
     @Given("I select floor {int}")
     public void iSelectFloor(int newFloor) {
-        destination = newFloor;
         lift.sendTo(newFloor);
+        destination = lift.getDestination();
     }
 
     @When("the lift passes floor {int}")
     public void theLiftPassesFloor(int passesFloor) {
-
+        lift.printHistory();
         assertThat(lift.getFloorHistory().contains("Passing floor " + passesFloor), is(equalTo(true)));
+    }
+
+    @Then("The destination is floor {int}")
+    public void theDestinationIsFloor(int floor) {
+        assertThat(lift.getDestination(),is(equalTo(floor)));
+    }
+
+    @And("The lift starts to move")
+    public void theLiftStartsToMove() {
+        lift.move(lift.getDestination());
     }
 }

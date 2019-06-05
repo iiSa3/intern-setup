@@ -13,6 +13,7 @@ public class Lift {
 
     public Lift(int currentFloor){
         this.currentFloor = currentFloor;
+        this.destination = currentFloor;
         this.history = new ArrayList<String>();
     }
     public boolean areDoorsOpen() {
@@ -23,14 +24,25 @@ public class Lift {
     public void call(int userFloor) {
         destination = userFloor;
         doors = CLOSED;
-        move(destination);
+        //move(destination);
     }
 
     public void sendTo(int newFloor) {
-        destination = newFloor;
-        doors = CLOSED;
-        move(destination);
+        if(destination == currentFloor) {
+            // this will only be reached if we get to the destination floor
+            destination = newFloor;
+            doors = CLOSED;
+            //move(destination);
+        }
+
     }
+    public void printHistory(){
+        for(String x : history){
+            System.out.println(x);
+
+        }
+    }
+
 
     private void moveUp(int destination){
         for(;currentFloor<destination;currentFloor++) {
@@ -43,7 +55,7 @@ public class Lift {
         }
     }
 
-    private void move(int destination) {
+    public void move(int destination) {
         // lift can move up
         if(currentFloor< destination){
             moveUp(destination);
@@ -69,5 +81,9 @@ public class Lift {
     public List<String> getFloorHistory() {
 
         return history;
+    }
+
+    public int getDestination() {
+        return this.destination;
     }
 }
