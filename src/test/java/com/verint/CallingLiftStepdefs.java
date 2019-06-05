@@ -80,7 +80,6 @@ public class CallingLiftStepdefs {
     @And("The lift starts to move")
     public void theLiftStartsToMove() {
         lift.move();
-        lift.printHistory();
     }
 
 
