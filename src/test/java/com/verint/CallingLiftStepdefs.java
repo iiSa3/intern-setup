@@ -63,6 +63,7 @@ public class CallingLiftStepdefs {
 
     @Then("The doors are open")
     public void theDoorsAreOpen() {
+        lift.printHistory();
         assertThat(lift.areDoorsOpen(),is(equalTo(true)));
     }
 
@@ -80,7 +81,7 @@ public class CallingLiftStepdefs {
 
     @Then("The destination is floor {int}")
     public void theDestinationIsFloor(int floor) {
-        assertThat(lift.getDestination(),is(equalTo(floor)));
+        assertThat(lift.isDestination(floor),is(equalTo(true)));
     }
 
     @And("The lift starts to move")
@@ -105,7 +106,7 @@ public class CallingLiftStepdefs {
 
     @Then("The lift stopped at floor {int}")
     public void theLiftStoppedAtFloor(int floor) {
-        //lift.printHistory();
+        lift.printHistory();
         assertThat(lift.getFloorHistory().contains("Lift arrived at floor " + floor),is(equalTo(true)));
     }
 
@@ -113,12 +114,16 @@ public class CallingLiftStepdefs {
     public void theLiftOrderOfArrivalIs(String StrOrder) {
         String[] temp = StrOrder.split(",");
         int[] Order = Arrays.stream(temp).mapToInt(Integer::parseInt).toArray();
+        int currIndex = 0;
         List<String> history = lift.getFloorHistory();
-        System.out.println(history.toString());
-        Collections.reverse(history);
         for(String element: history){
             if(element.contains("arrived")){
                 System.out.println(element);
+                assertThat(element.equals("Lift arrived at floor " + Order[currIndex]), is(equalTo(true)));
+                currIndex++;
+
+                if(currIndex == Order.length)
+                    break;
             }
         }
     }

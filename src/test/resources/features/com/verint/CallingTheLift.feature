@@ -111,10 +111,9 @@ Feature: Scenarios to do with being able to call the lift
     And I select floor 1
     When The lift starts to move
     Then The lift stopped at floor 5
-    And The lift starts to move
     And The lift stopped at floor 1
 
-  Scenario: The lift goes to all destinations
+  Scenario: The lift goes to all (more) destinations
     Given The lift is at floor 2
     And I select floor 5
     And I select floor 1
@@ -123,7 +122,6 @@ Feature: Scenarios to do with being able to call the lift
     When The lift starts to move
     Then The lift stopped at floor 3
     And The lift stopped at floor 5
-    And The lift stopped at floor 2
     And The lift stopped at floor 1
 
   Scenario: The lift goes only in one direction
