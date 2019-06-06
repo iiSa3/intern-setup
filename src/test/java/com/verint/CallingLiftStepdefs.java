@@ -6,6 +6,8 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -35,6 +37,8 @@ public class CallingLiftStepdefs {
     @Given("The lift is at floor {int}")
     public void theLiftIsAtFloor(int floorNumber) {
         lift = new Lift(floorNumber);
+        //System.out.println("Created a brand new lift!");
+        //System.out.println("destination : " + lift.getDestination());
         this.initialFloor = floorNumber;
     }
 
@@ -51,6 +55,8 @@ public class CallingLiftStepdefs {
 
     @When("The lift arrives")
     public void theLiftArrives() {
+        //System.out.println("expected:" +destination);
+        //System.out.println("actual:" +lift.getFloor());
         assertThat(lift.getFloor(),is(equalTo(destination)));
 
     }
@@ -63,7 +69,7 @@ public class CallingLiftStepdefs {
     @Given("I select floor (-?\\d+)$")
     public void iSelectFloor(int newFloor) {
         lift.sendTo(newFloor);
-        destination = lift.getDestination();
+        destination = newFloor;
     }
 
     @When("the lift passes floor {int}")
@@ -101,5 +107,19 @@ public class CallingLiftStepdefs {
     public void theLiftStoppedAtFloor(int floor) {
         //lift.printHistory();
         assertThat(lift.getFloorHistory().contains("Lift arrived at floor " + floor),is(equalTo(true)));
+    }
+
+    @Then("The lift order of arrival is {string}")
+    public void theLiftOrderOfArrivalIs(String StrOrder) {
+        String[] temp = StrOrder.split(",");
+        int[] Order = Arrays.stream(temp).mapToInt(Integer::parseInt).toArray();
+        List<String> history = lift.getFloorHistory();
+        System.out.println(history.toString());
+        Collections.reverse(history);
+        for(String element: history){
+            if(element.contains("arrived")){
+                System.out.println(element);
+            }
+        }
     }
 }

@@ -47,7 +47,7 @@ public class Lift {
             destinationQueue[floor - min] = true;
             if (destination == currentFloor) {
                 // this will only be reached if we got to the destination floor
-                destination = floor;
+                //destination = floor;
                 doors = CLOSED;
             }
             this.action = true;
@@ -72,7 +72,6 @@ public class Lift {
     }
     private void moveUp(int destination){
         for(;currentFloor<=destination;currentFloor++) {
-            System.out.println(currentFloor + "" + destinationQueue[currentFloor - min]);
             if (destinationQueue[currentFloor - min]) {
                 destinationQueue[currentFloor - min] = false;
                 history.add("Lift arrived at floor " + currentFloor);
@@ -95,6 +94,10 @@ public class Lift {
     }
 
     public void move() {
+        //System.out.println("Moving!");
+        //System.out.println(Arrays.toString(destinationQueue));
+        //System.out.println("destination : "+destination);
+        //System.out.println("current floor : " + currentFloor);
         // lift can move up
         if(currentFloor< destination){
             moveUp(destination);
@@ -103,14 +106,18 @@ public class Lift {
         if(currentFloor> destination){
             moveDown(destination);
         }
-
+        //System.out.println("moving has happened!");
+        //System.out.println("destination: " +destination);
+        //System.out.println("current floor: " + currentFloor);
         checkInDirection(direction);
 
         if(destination == currentFloor)
             checkInDirection(direction *-1);
 
-        if(destination != currentFloor)
+        if(destination != currentFloor) {
+            //System.out.println("Got new destination! " + destination);
             move();
+        }
 
         doors = OPEN;
     }
@@ -119,6 +126,7 @@ public class Lift {
         for(int i = currentFloor - min + direction; i >= 0 && i <= max-min; i+=direction) {
             if (destinationQueue[i]) { // If this floor is to be visited
                 destination = i + min;
+                this.direction = direction;
                 break;
             }
         }
