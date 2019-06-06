@@ -18,7 +18,6 @@ public class CallingLiftStepdefs {
 
     private Lift lift;
     private int destination;
-    private int initialFloor;
 
     private static final boolean OPEN = true;
     private static final boolean CLOSED = false;
@@ -31,15 +30,12 @@ public class CallingLiftStepdefs {
 
     @Then("the doors are closed")
     public void theDoorsAreClosed() {
-        assertThat(lift.previousDoorState(), is(equalTo(false)));
+        assertThat(lift.areDoorsOpen(), is(equalTo(false)));
     }
 
     @Given("The lift is at floor {int}")
     public void theLiftIsAtFloor(int floorNumber) {
         lift = new Lift(floorNumber);
-        //System.out.println("Created a brand new lift!");
-        //System.out.println("destination : " + lift.getDestination());
-        this.initialFloor = floorNumber;
     }
 
     @When("I call the lift from floor {int}")
@@ -50,13 +46,11 @@ public class CallingLiftStepdefs {
 
     @Then("the doors are closed before it arrives")
     public void theDoorsAreClosedBeforeItArrives() {
-        assertThat(lift.previousDoorState(), is(equalTo(CLOSED)));
+        assertThat(lift.areDoorsOpen(), is(equalTo(CLOSED)));
     }
 
     @When("The lift arrives")
     public void theLiftArrives() {
-        //System.out.println("expected:" +destination);
-        //System.out.println("actual:" +lift.getFloor());
         assertThat(lift.getFloor(),is(equalTo(destination)));
 
     }
@@ -100,13 +94,11 @@ public class CallingLiftStepdefs {
     @Given("The lift can go between floors (-?\\d+) and (-?\\d+)")
     public void theLiftCanGoBetweenFloorsMinAndMax(int min, int max) {
         lift = new Lift(0, min, max);
-
     }
 
 
     @Then("The lift stopped at floor {int}")
     public void theLiftStoppedAtFloor(int floor) {
-        //lift.printHistory();
         assertThat(lift.getFloorHistory().contains("Lift arrived at floor " + floor),is(equalTo(true)));
     }
 
