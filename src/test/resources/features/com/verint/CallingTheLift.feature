@@ -19,7 +19,6 @@ Feature: Scenarios to do with being able to call the lift
   Scenario: When the lift is already on the floor the doors open
     Given The lift is at floor 3
     When I call the lift from floor 3
-    And The lift starts to move
     Then The doors are open
 
   Scenario: The doors open when reaching the destination
@@ -98,10 +97,9 @@ Feature: Scenarios to do with being able to call the lift
   Scenario: The lift can pickup passengers on the way down
     Given The lift is at floor 10
     And I select floor 3
-    When I call the lift from floor 7
+    When I call the lift from floor 7 in direction "down"
     And The lift starts to move
     Then The lift stopped at floor 7
-    And The lift starts to move
     And The lift stopped at floor 3
 
 
@@ -131,3 +129,11 @@ Feature: Scenarios to do with being able to call the lift
     And I select floor 9
     When The lift starts to move
     Then The lift order of arrival is "4,9,1"
+
+  Scenario: Lift only picks up passengers in the right direction
+    Given The lift is at floor 0
+    And I select floor 1
+    And I select floor 3
+    And I call the lift from floor 2 in direction "down"
+    When The lift starts to move
+    Then The lift order of arrival is "1,3,2"

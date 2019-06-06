@@ -8,6 +8,8 @@ public class Lift {
     private static boolean OPEN = true;
     private static boolean CLOSED = false;
     private boolean[] destinationQueue;
+    private boolean[] upCalls;
+    private boolean[] downCalls;
     private int currentFloor;
     private int min;
     private int max;
@@ -19,20 +21,18 @@ public class Lift {
     private static final int DOWN = -1;
 
     public Lift(int currentFloor){
-        this.currentFloor = currentFloor;
-        this.history = new ArrayList<String>();
-        this.min = 0;
-        this.max = 10;
-        destinationQueue = new boolean[max - min+1];
+        this(currentFloor,0,10);
     }
 
     public Lift(int currentFloor, int min, int max) {
         this.currentFloor = currentFloor;
-        this.history = new ArrayList<String>();
+        this.history = new ArrayList<>();
         this.min = min;
         this.max= max;
         this.action = false;
         destinationQueue = new boolean[max - min+1];
+        upCalls = new boolean[max - min + 1];
+        downCalls = new boolean[max - min +1];
     }
 
     public boolean areDoorsOpen() {
@@ -52,9 +52,38 @@ public class Lift {
         }
     }
     public void call(int userFloor) {
-        addDestination(userFloor);
+        //add to up/down array
+        call(userFloor,UP);
     }
-
+    public void call(int userFloor, int direction) {
+        //addDestination(userFloor);
+        if(direction == UP){
+            if(userFloor != this.getFloor() && userFloor >= min && userFloor <= max) {
+                upCalls[userFloor - min] = true;
+                this.action = true;
+            }
+            else if(userFloor == this.getFloor()){
+                this.doors = OPEN;
+                this.action = true;
+            }
+            else{
+                this.action = false;
+            }
+        }
+        else{
+            if(userFloor != this.getFloor() && userFloor >= min && userFloor <= max){
+                downCalls[userFloor - min] = true;
+                this.action = true;
+            }
+            else if(userFloor == this.getFloor()){
+                this.doors = OPEN;
+                this.action = true;
+            }
+            else{
+                this.action = false;
+            }
+        }
+    }
     public void sendTo(int newFloor) {
         addDestination(newFloor);
 
@@ -67,8 +96,16 @@ public class Lift {
     }
     private void moveInDirection(){
         currentFloor+=direction;
-        if (destinationQueue[currentFloor - min]) {
+        boolean[] correctCalls;//this array corresponds to either up or down calls depending on direction
+        if(direction == UP){
+            correctCalls = upCalls;
+        }
+        else{
+            correctCalls = downCalls;
+        }
+        if (destinationQueue[currentFloor - min] || correctCalls[currentFloor - min]) {
             destinationQueue[currentFloor - min] = false;
+            correctCalls[currentFloor - min] = false;
             history.add("Lift arrived at floor " + currentFloor);
             this.doors = OPEN;
         } else {
@@ -91,11 +128,13 @@ public class Lift {
                 moveInDirection();
             }
         }
+        this.doors = OPEN;
+
     }
 
     private boolean checkInDirection(int direction) {
         for(int i = currentFloor - min + direction; i >= 0 && i <= max-min; i+=direction) {
-            if (destinationQueue[i]) { // If this floor is to be visited
+            if (destinationQueue[i] || upCalls[i] || downCalls[i]) { // If this floor is to be visited
                 return true;
             }
         }
