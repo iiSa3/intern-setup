@@ -16,9 +16,9 @@ public class Lift {
     private boolean action;
     private boolean doors = CLOSED;
     private List<String> history;
-    private int direction = 1;
     private static final int UP = 1;
     private static final int DOWN = -1;
+    private int direction = UP;
 
     public Lift(int currentFloor){
         this(currentFloor,0,10);
@@ -56,32 +56,19 @@ public class Lift {
         call(userFloor,UP);
     }
     public void call(int userFloor, int direction) {
-        //addDestination(userFloor);
-        if(direction == UP){
-            if(userFloor != this.getFloor() && userFloor >= min && userFloor <= max) {
+        if(userFloor != this.getFloor() && userFloor >= min && userFloor <= max) {
+            if(direction == UP)
                 upCalls[userFloor - min] = true;
-                this.action = true;
-            }
-            else if(userFloor == this.getFloor()){
-                this.doors = OPEN;
-                this.action = true;
-            }
-            else{
-                this.action = false;
-            }
+            else
+                downCalls[userFloor - min] = true;
+            this.action = true;
+        }
+        else if(userFloor == this.getFloor()){
+            this.doors = OPEN;
+            this.action = true;
         }
         else{
-            if(userFloor != this.getFloor() && userFloor >= min && userFloor <= max){
-                downCalls[userFloor - min] = true;
-                this.action = true;
-            }
-            else if(userFloor == this.getFloor()){
-                this.doors = OPEN;
-                this.action = true;
-            }
-            else{
-                this.action = false;
-            }
+            this.action = false;
         }
     }
     public void sendTo(int newFloor) {
@@ -141,16 +128,11 @@ public class Lift {
         return false;
     }
 
-    public boolean previousDoorState() {
-        return false;
-    }
-
     public int getFloor() {
         return currentFloor;
     }
 
     public List<String> getFloorHistory() {
-
         return history;
     }
 
