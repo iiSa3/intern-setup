@@ -1,7 +1,6 @@
 package com.verint;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Lift {
@@ -26,7 +25,7 @@ public class Lift {
 
     public Lift(int currentFloor, int min, int max) {
         this.currentFloor = currentFloor;
-        this.history = new ArrayList<String>();
+        this.history = new ArrayList<>();
         this.min = min;
         this.max= max;
         this.action = false;
