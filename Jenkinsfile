@@ -3,7 +3,9 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                sh 'mvn --version'
+                sh 'mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V'
+                sh 'mvn test -B'
+                sh 'mvn spotbugs:check'
             }
         }
     }
