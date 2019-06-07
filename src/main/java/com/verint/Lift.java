@@ -26,7 +26,7 @@ public class Lift {
 
     public Lift(int currentFloor, int min, int max) {
         this.currentFloor = currentFloor;
-        this.history = new ArrayList<>();
+        this.history = new ArrayList<String>();
         this.min = min;
         this.max= max;
         this.action = false;
