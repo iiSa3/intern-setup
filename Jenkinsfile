@@ -3,9 +3,7 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                sh 'mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V'
-                sh 'mvn test -B'
-                sh 'mvn spotbugs:check'
+                sh 'gradle cucumber'
             }
         }
     }

@@ -2,3 +2,6 @@ lift-kata.iml
 lift.iml
 .idea/
 target/
+.gradle/
+gradle/
+build/
