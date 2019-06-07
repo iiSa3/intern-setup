@@ -3,5 +3,4 @@ lift.iml
 .idea/
 target/
 .gradle/
-gradle/
 build/
