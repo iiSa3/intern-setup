@@ -4,3 +4,4 @@ lift.iml
 target/
 .gradle/
 build/
+out/
